@@ -57,6 +57,8 @@ function BreathingExercise({theme}) {
     { name: "exhale", label: "Breathe out", duration: 6, color: "#22c55e" },
   ];
   const start = () => {
+    ReactGA.event({ category: "engagement", action: "breathing_start" });
+
     let phaseIdx = 0, tick = 0;
     setPhase(phases[0].name); setCount(phases[0].duration);
     intervalRef.current = setInterval(() => {
@@ -69,8 +71,14 @@ function BreathingExercise({theme}) {
       } else { setCount(remaining); }
     }, 1000);
   };
-  const stop = () => { clearInterval(intervalRef.current); setPhase("idle"); setCount(0); };
+  const stop = () => {
+    clearInterval(intervalRef.current);
+    setPhase("idle"); setCount(0);
+    ReactGA.event({ category: "engagement", action: "breathing_stop" });
+  };
+  
   useEffect(() => () => clearInterval(intervalRef.current), []);
+  
   const currentPhase = phases.find(p => p.name === phase);
   const isActive = phase !== "idle";
   const scale = phase === "inhale" ? 1.3 : phase === "hold" ? 1.3 : 1;
@@ -100,7 +108,10 @@ function ReminderCard() {
       </div>
       <div style={{ display: "flex", gap: 6 }}>
         {REMINDERS.map((_, i) => (
-          <button key={i} onClick={() => setIdx(i)} style={{ width: i === idx ? 20 : 6, height: 6, borderRadius: 3, background: i === idx ? GREEN : "#1f2937", border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s ease" }} />
+          <button key={i} onClick={() => {
+            setIdx(i);
+            ReactGA.event({ category: "engagement", action: "reminder_viewed", label: `reminder_${i}` });
+          }} style={{ width: i === idx ? 20 : 6, height: 6, borderRadius: 3, background: i === idx ? GREEN : "#1f2937", border: "none", cursor: "pointer", padding: 0, transition: "all 0.3s ease" }} />
         ))}
       </div>
     </div>
@@ -198,7 +209,8 @@ Include at least 8-10 recent layoffs in recentLayoffs. Focus on 2026 data primar
   const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "{}";
   try {
     return JSON.parse(text.replace(/```json|```/g, "").trim());
-  } catch {
+  } catch (err) {
+    ReactGA.event({ category: "error", action: "api_fetch_failed", label: err.message });
     return null;
   }
 }
@@ -221,6 +233,11 @@ export default function LayoffsDashboard() {
   const [tab, setTab] = useState("overview");
   const theme = tab === "perspective" ? THEMES.calm : THEMES.default;
   const fetchedRef = useRef(false);
+
+  const handleTabChange = (t) => {
+    setTab(t);
+    ReactGA.send({ hitType: "pageview", page: `/${t}` });
+  };
 
   useEffect(() => {
     if (fetchedRef.current) return;
@@ -259,7 +276,7 @@ export default function LayoffsDashboard() {
           </div>
           <div style={{ display: "flex", gap: 6 }}>
             {["overview", "companies", "trends", "perspective"].map(t => (
-              <button key={t} onClick={() => setTab(t)} style={{
+              <button key={t} onClick={() => handleTabChange(t)} style={{
                 background: tab === t ? (t === "perspective" ? GREEN : ACCENT) : "#111827",
                 color: tab === t ? "#030712" : t === "perspective" ? "#22c55e" : "#9ca3af",
                 border: t === "perspective" && tab !== t ? "1px solid #22c55e30" : "none",
@@ -295,7 +312,7 @@ export default function LayoffsDashboard() {
           <span style={{ fontSize: 16 }}>💚</span>
           <p style={{ margin: 0, fontSize: 13, color: "#6b7280", lineHeight: 1.5 }}>
             If you're job searching right now — these numbers are context, not a verdict on you.{" "}
-            <button onClick={() => setTab("perspective")} style={{ background: "none", border: "none", color: "#22c55e", fontSize: 13, cursor: "pointer", padding: 0, textDecoration: "underline" }}>
+            <button onClick={() => handleTabChange("perspective")} style={{ background: "none", border: "none", color: "#22c55e", fontSize: 13, cursor: "pointer", padding: 0, textDecoration: "underline" }}>
               See some perspective →
             </button>
           </p>
@@ -541,7 +558,8 @@ export default function LayoffsDashboard() {
                   { label: "Open Source Job Board", url: "https://github.com/SimplifyJobs/New-Grad-Positions", icon: "👩‍💻" },
                   { label: "Mental Health in Tech", url: "https://osmihelp.org", icon: "🧘" },
                 ].map(r => (
-                  <a key={r.label} href={r.url} target="_blank" rel="noreferrer" style={{ display: "flex", gap: 10, alignItems: "center", background: "#060b14", border: "1px solid #111827", borderRadius: 8, padding: "10px 14px", textDecoration: "none", transition: "border-color 0.6+s" }}
+                  <a key={r.label} href={r.url} onClick={() => ReactGA.event({ category: "outbound", action: "resource_click", label: r.label })}
+                  target="_blank" rel="noreferrer" style={{ display: "flex", gap: 10, alignItems: "center", background: "#060b14", border: "1px solid #111827", borderRadius: 8, padding: "10px 14px", textDecoration: "none", transition: "border-color 0.6+s" }}
                     onMouseEnter={e => e.currentTarget.style.borderColor = "#22c55e40"}
                     onMouseLeave={e => e.currentTarget.style.borderColor = "#111827"}>
                     <span style={{ fontSize: 16 }}>{r.icon}</span>
