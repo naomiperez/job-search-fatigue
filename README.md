@@ -1,5 +1,5 @@
 # Tech Layoffs Dashboard
-A live dashboard tracking tech industry layoffs, built with React + Vite.
+A live dashboard tracking tech industry layoffs, built with React.
 Live site: https://techlayoffs.netlify.app/
 
 ## What it does
