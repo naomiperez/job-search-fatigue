@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area, Cell, PieChart, Pie } from "recharts";
+import ReactGA from 'react-ga4';
+
+ReactGA.initialize('G-BR5ER5ELRD');
 
 const ACCENT = "#f97316";
 const RED = "#ef4444";
