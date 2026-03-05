@@ -274,7 +274,7 @@ export default function LayoffsDashboard() {
               Tech Layoffs <span style={{ color: ACCENT }}>2026</span>
             </h1>
           </div>
-          <div style={{ display: "flex", gap: 6 }}>
+          <div style={{ display: "flex", flexShrink: 1, flexWrap: "wrap", minWidth: 0, gap: 6 }}>
             {["overview", "companies", "trends", "perspective"].map(t => (
               <button key={t} onClick={() => handleTabChange(t)} style={{
                 background: tab === t ? (t === "perspective" ? GREEN : ACCENT) : "#111827",
