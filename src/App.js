@@ -522,7 +522,7 @@ export default function LayoffsDashboard() {
                 emoji: "📬",
               },
               {
-                title: "Silence is a system failure",
+                title: "Its not you, its the market",
                 body: "Ghosting is industry-wide right now. Hiring teams are understaffed, overwhelmed, or frozen by headcount uncertainty. Not hearing back is almost never personal — it usually means the role paused or the team is buried.",
                 emoji: "🔇",
               },
@@ -533,7 +533,7 @@ export default function LayoffsDashboard() {
               },
               {
                 title: "Your skills didn't disappear",
-                body: "A layoff or job gap doesn't erase what you know or what you've built. The instinct to feel like an imposter is common and understandable — but your track record is still real. Markets change; competence doesn't.",
+                body: "A layoff or job gap doesn't erase what you know or what you've built. The instinct to feel like an imposter is common and understandable — but your track record is still real.",
                 emoji: "🧱",
               },
             ].map(card => (
