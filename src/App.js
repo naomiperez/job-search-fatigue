@@ -550,20 +550,24 @@ export default function LayoffsDashboard() {
             <div style={{ gridColumn: "1 / -1", background: "#0a0f1a", border: "1px solid #111827", borderRadius: 12, padding: "20px 24px" }}>
               <div style={{ fontSize: 11, color: "#6b7280", letterSpacing: 2, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>Practical Resources</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
-                {[
-                  { label: "Laid Off? What to do first", url: "https://www.themuse.com/advice/laid-off-what-to-do", icon: "📋" },
-                  { label: "Tech Interview Handbook", url: "https://www.techinterviewhandbook.org", icon: "📚" },
-                  { label: "Levels.fyi (salary + roles)", url: "https://www.levels.fyi", icon: "💰" },
-                  { label: "Blind Community Forum", url: "https://www.teamblind.com", icon: "💬" },
-                  { label: "Open Source Job Board", url: "https://github.com/SimplifyJobs/New-Grad-Positions", icon: "👩‍💻" },
-                  { label: "Mental Health in Tech", url: "https://osmihelp.org", icon: "🧘" },
+              {[
+                  { label: "Tech Interview Handbook", url: "https://www.techinterviewhandbook.org", icon: "📚", desc: "Free interview prep — algorithms, system design, behavioral" },
+                  { label: "ByteByteGo", url: "https://bytebytego.com", icon: "⚙️", desc: "System design concepts explained visually" },
+                  { label: "Levels.fyi", url: "https://www.levels.fyi", icon: "💰", desc: "Real salary data and career levels across companies" },
+                  { label: "Blind", url: "https://www.teamblind.com", icon: "💬", desc: "Anonymous forum for candid tech industry discussion" },
+                  { label: "layoffs.fyi", url: "https://layoffs.fyi", icon: "📈", desc: "Live layoff tracker — see what's happening in real time" },
+                  { label: "Simplify Job Board", url: "https://github.com/SimplifyJobs/New-Grad-Positions", icon: "👩‍💻", desc: "Curated new grad & junior tech roles, updated daily" },
+                  { label: "Mental Health in Tech (OSMI)", url: "https://osmihelp.org", icon: "🧘", desc: "Resources for mental wellness in the tech workplace" },
+                  { label: "The Muse — After a Layoff", url: "https://www.themuse.com/advice/laid-off-what-to-do", icon: "📋", desc: "Practical steps for the first days after a layoff" },
                 ].map(r => (
-                  <a key={r.label} href={r.url} onClick={() => ReactGA.event({ category: "outbound", action: "resource_click", label: r.label })}
-                  target="_blank" rel="noreferrer" style={{ display: "flex", gap: 10, alignItems: "center", background: "#060b14", border: "1px solid #111827", borderRadius: 8, padding: "10px 14px", textDecoration: "none", transition: "border-color 0.6+s" }}
+                  <a key={r.label} href={r.url} target="_blank" rel="noreferrer" style={{ display: "flex", gap: 10, alignItems: "flex-start", background: "#060b14", border: "1px solid #111827", borderRadius: 8, padding: "12px 14px", textDecoration: "none", transition: "border-color 0.15s" }}
                     onMouseEnter={e => e.currentTarget.style.borderColor = "#22c55e40"}
                     onMouseLeave={e => e.currentTarget.style.borderColor = "#111827"}>
-                    <span style={{ fontSize: 16 }}>{r.icon}</span>
-                    <span style={{ fontSize: 12, color: "#9ca3af", lineHeight: 1.4 }}>{r.label}</span>
+                    <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{r.icon}</span>
+                    <div>
+                      <div style={{ fontSize: 13, color: "#d1d5db", fontWeight: 600, lineHeight: 1.4, marginBottom: 2 }}>{r.label}</div>
+                      <div style={{ fontSize: 11, color: "#4b5563", lineHeight: 1.4 }}>{r.desc}</div>
+                    </div>
                   </a>
                 ))}
               </div>
