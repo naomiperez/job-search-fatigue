@@ -528,7 +528,7 @@ export default function LayoffsDashboard() {
               },
               {
                 title: "Longer searches are the new normal",
-                body: "The average senior tech job search now runs 4–6 months. In 2021 it was 6 weeks. Recalibrating your expectations to match the current market can meaningfully reduce anxiety without changing anything about your search.",
+                body: "The average senior tech job search now runs 4–6 months, often longer. In 2021 it was 6 weeks. Recalibrating your expectations to match the current market can meaningfully reduce anxiety without changing anything about your search.",
                 emoji: "📅",
               },
               {
